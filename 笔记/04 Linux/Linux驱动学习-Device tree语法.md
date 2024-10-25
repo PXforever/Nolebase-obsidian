@@ -4,32 +4,21 @@ share: "true"
 # Device Tree语法
 
 > 背景就不再累述
-
 ### 参考链接：
-
 [一文搞懂设备树基础语法](https://blog.csdn.net/weixin_39674445/article/details/118398831)
-
+[设备树基本语法](https://blog.csdn.net/challenglistic/article/details/131867382)
 ## DTS DTSI DTB
-
 > 这个三个文件是开发中常见的文件
-
 ![[笔记/01 附件/Linux驱动学习-Device tree语法/设备树转换.drawio.png|设备树转换.drawio]]
-
 通过如下代码实现转换(脚本在kernel里有)：
-
 ```shell
 ./scripts/dtc/dtc -I dts -O dtb -o tmp.dtb arch/arm/boot/dts/xxx.dts  # 编译dts为dtb
 ./scripts/dtc/dtc -I dtb -O dts -o tmp.dts arch/arm/boot/dts/xxx.dtb  #反编译dtb为dts
 ```
-
 `*.dtsi`一般是由soc厂商编写，主要是描述硬件信息，我们拿到之后二次开发需要编写`*.dts`文件，在该文件使用`#include "sun8iw11p1_pwm1.dtsi"` 来包含其他设备树文件。
-
 ### 如何添加自己的dts文件
-
 文件名：`user.dts`,内容：定义一个`my_dev`节点。
-
 在目录`linux-3.10\arch\arm\boot\dts`下的`Makefile`文件控制编译位置加入：
-
 ```makefile
 dtb-$(CONFIG_ARCH_SUN8IW11P1) += sun8iw11p1-fpga.dtb \
 	sun8iw11p1-soc.dtb \
@@ -39,11 +28,8 @@ dtb-$(CONFIG_ARCH_SUN8IW11P1) += sun8iw11p1-fpga.dtb \
 	sun8iw11p1-OKT3_S.dtb \
 	user.dtb
 ```
-
 **注意：`CONFIG_ARCH_SUN8IW11P1`是在配置过程中产生的，这里不作展开讲解**
-
 使用命令行(`kernel`目录)：
-
 ```shell
 source ./misc_config
 AW_LICHEE_ROOT=/home/forlinx/work/lichee
@@ -56,9 +42,7 @@ export ARCH=arm
 
 make dtbs
 ```
-
 设备树如下写：
-
 ```c
 /*
 * user add a devices tree file
@@ -75,11 +59,8 @@ make dtbs
 	};
 }
 ```
-
 似乎不能使用`#include "sun8iw11p1-OKA40i_C.dts"`这样会产生混乱。猜想可能最终的`dtb`文件只能有一个,所以目标不知道是使用`user.dtb`还是`sun8iw11p1-OKA40i_C.dtb`。所以将该文件写成`user.dtsi`,在`sun8iw11p1-OKA40i_C.dts`文件`include`。
-
 ## 基础语法
-
 ```C
 /dts-v1/;
 
@@ -98,15 +79,12 @@ make dtbs
 ```
 
 ![[笔记/01 附件/Linux驱动学习-Device tree语法/image-20230401195957509.png|image-20230401195957509]]
-
 **注意：val有三种情况**
-
 + string: `"val"`
 + 32位无符号整型(用尖括号)：`<1>`
 + 二进制数据（方括号）：`binary-property = [0x01 0x23 0x45 0x67]`
 
 ### node节点语法
-
 ```assembly
 /{
 	[property definitions]
@@ -118,9 +96,7 @@ make dtbs
     };
 };
 ```
-
 ##### 示例
-
 ```c
 /{
     twi4: twi@0x01c2c000{
@@ -161,20 +137,15 @@ make dtbs
 ```
 
 ### 特殊属性
-
 ```c
 #address-cells = <2>; //在它的子节点的reg属性中，用多少个32位整数来描述地址。
 #size-cells = <2>; //在它的子节点的reg属性中，用多少个u32来描述大小。
 model = "sun8iw11p1"; //当前的这个板子是什么
 compatible = "arm,sun8iw11p1", "arm,sun8iw11p1"; //定义一系列的字符串，用来表示这个板子兼容哪些平台。
 ```
-
 **注意：以上四个属性根节点必须要有。**
 
-
-
 ##### 示例
-
 ```c
 soc: soc@01c00000 {
     compatible = "simple-bus";
@@ -208,17 +179,12 @@ soc: soc@01c00000 {
 > ```
 
 ## 特殊的节点
-
 + 根节点，这是必须的节点
-
 + memory节点: 设置内存大小
-
 + chosen节点：`通过设备树文件给内核传入一些参数，需要在chosen节点中设置bootargs属性`
-
 + cpu节点
 
 ### 示例
-
 ```C
 /{
     #address-cells = <2>;
@@ -246,34 +212,26 @@ soc: soc@01c00000 {
 ```
 
 ## 常用的属性
-
-+ compatible
-
++ `compatible`
 ```C
 spi{
 	compatible = "spi-1","spi-2","spi-3";
 }; // 表示这个spi或者硬件兼容驱动spi-1,spi-2,spi-3.
 ```
-
-+ model
-
++ `model`
 ```c
 //model用来准确的定义这个硬件是什么。
 model = "sun8iw11p1"; //当前的这个板子是什么
 compatible = "arm,sun8iw11p1", "arm,sun8iw11p1"; //定义一系列的字符串，用来表示这个板子兼容哪些平台。
 ```
-
-+ status
-
++ `status`
 ```C
 &spi1{
 	status = "disabled";
     //status = "okay";
 };
 ```
-
-+ reg
-
++ `reg`
 ```c
 //在设备树里用来描述一段空间。
 #address-cells = <2>;
@@ -285,9 +243,7 @@ memory@40000000 {
 ```
 
 ## 代码获取属性
-
 > 部分属性会被内核使用，所以不用我们来解析，但是有些自定义需要我们来敲入代码解析，使用的函数一般如下：
-
 ```c
 //找到节点
 of_find_node_by_path // 根据路径找到节点
@@ -304,7 +260,5 @@ of_get_property // 根据名字找到节点的属性，并且返回它的值。
 ```
 
 ## 高级用法
-
 > 略
-
 + port，phandle， endpoint
