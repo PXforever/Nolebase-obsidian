@@ -135,7 +135,6 @@ hello_123 	#合法
 ### 自定义变量基本语法
 
 + 定义变量
-
 ```shell
 VARIABLE=1
 INTERG=22
@@ -143,32 +142,27 @@ STRING=opq
 ```
 
 + 设置变量
-
 ```shell
 set VARIABLE=90
 ```
 
 + 删除变量
-
 ```shell
 unset VARIABLE=99
 ```
 
 + 声明静态变量
-
 ```shell
 readonly VARIABLE=99
 # 注意静态变量不能使用unset
 ```
 
 + 使用变量
-
 ```shell
 $VARIABLE
 ```
 
 + 变量赋值
-
 ```shell
 # 简单赋值
 a=123 && echo $a
@@ -177,11 +171,9 @@ a=123 && echo $a
 str=`cat hellowrld.sh`  #两个字符串间不能有空格
 str=$(cat /etc/os-release)
 ```
-
 **注意：赋值时，变量与字符串间不能有空格**
 
 + 局部变量
-
 ```shell
 #只在代码款或函数中可见，外部不可用
 {
@@ -191,41 +183,31 @@ echo $a #无法使用改变量
 ```
 
 + Bash变量
-
 > 不区分类型，都是字符串，不允许进行数值计算，除非变量中包
 
 + 其他注意
-
 > 如果变量的值中间有空格，则使用引号(单引号与双引号均可)括起来
 
 ### 环境变量
-
 > 会影响用户接口和shell的行为。环境变量是一个**全局变量**。
 >
 > 通过`export`命令将变量声明为环境变量即可
-
 ```shell
 export VERIABLE=99
 
 echo $VERIABLE
 ```
-
 > 假如到`/root/.bashrc`文件下面也可以环境变量的添加，添加完成后使用`source /root/.bashrc`
-
 ```shell
 source /root/.bashrc
 ```
 
 ### 引用变量
-
 > 一般使用`$`来引用变量
 
 ## 运算符
-
 ### 赋值运算符
-
 `=`：通用赋值运算，可用于算术和字符串的赋值。
-
 ### 算术运算符
 
 | 运算符 | 描述 |    备注    |
@@ -240,7 +222,6 @@ source /root/.bashrc
 |  `--`  | 自减 | 延伸：`+=` |
 
 示例：
-
 ```shell
 #!/bin/bash
 a=5
@@ -253,7 +234,6 @@ echo $res
 ```
 
 ### 位运算符
-
 > 略
 
 ### 比较运算符
@@ -277,10 +257,10 @@ echo $res
 
 ### 逻辑运算符
 
-| 运算符 |    描述     | 等价使用 | 具体说明 |
-| :----: | :---------: | :------: | :------: |
-|  `&&`  | 逻辑与(AND) |   `-a`   |    /     |
-|  `||`  | 逻辑或(OR)  |   `-o`   |    /     |
+|   运算符   |    描述    | 等价使用 | 具体说明 |
+| :-----: | :------: | :--: | :--: |
+|  `&&`   | 逻辑与(AND) | `-a` |  /   |
+| $\Vert$ | 逻辑或(OR)  | `-o` |  /   |
 
 ```shell
 # 只有该用法
@@ -296,27 +276,18 @@ command3 && command4
 > 字符串是由`单引号('')`或者`双引号("")`或者也不可用引号。
 
 + 单引号
-
   + 原样输出
   + 单引号内不能使用单引号
 
-  
-
 + 双引号
-
   + 如果其中使用了变量，则变量内容也会被替换
   + 如果再次使用引号，则使用转义符
 
-  
-
 + 不用引号
-
   + 性质和双引号一致，但是字符串不能有空格
 
 ### 字符串的长度
-
 > 直接使用`${#string}`来计算字符串的长度。
-
 ```shell
 # 三种
 ${#String}
@@ -334,7 +305,6 @@ expr "$String" : '.*'
 ```
 
 ### 所以子串第一次出现的位置
-
 ```shell
 expr index "$String" '$substring'
 
@@ -344,12 +314,8 @@ expr index "$String" '3'
 > 5
 ```
 
-
-
 ### 提取子串
-
 + 使用`“:”`来截取
-
 ```shell
 # 从string字符串的左边第start个字符开始，向右截取到最后，start从0开始
 ${string:start}
@@ -365,7 +331,6 @@ ${string:0-start:length}
 ```
 
 + 匹配截取
-
 ```shell
 # 从string字符串左边第一次出现*chars的位置开始，截取*chars右边所有字符
 ${string#*chars}
@@ -384,7 +349,6 @@ ${string%%chars*}
 ```
 
 ### 字符串的拼接
-
 ```shell
 # 直接并排放即可
 str1="hello"
@@ -393,35 +357,29 @@ result1=${str1}${str2}
 ```
 
 ### 字符串的替换
-
 + 替换一个
-
 ```shell
 # 对string操作，将str1替换为str2
 ${string/str1/str2}
 ```
 
 + 替换所有
-
 ```shell
 # 对string操作，将str1全部替换为str2
 ${string//str1/str2}
 ```
 
 + 替换开头一个
-
 ```shell
 ${string/#str1/str2} # 类似上面字符串提取子串
 ```
 
 + 替换最后一个
-
 ```shell
 ${string/%str1/str2} # 类似上面字符串提取子串
 ```
 
 ## 数组
-
 > `bash`只支持一维数组。数组元素可使用符号`var[number]`来初始化。
 >
 > 脚本使用`declare -a var`语句来指定一个数组。
@@ -429,7 +387,6 @@ ${string/%str1/str2} # 类似上面字符串提取子串
 > 数组访问：通过`下标`的方式访问。数组元素的下标从`0`开始，和C语言类似。下标可以是`整数`或者`算术表达式`，其值范围：`[0,∞]`。
 >
 > 在数组中，`${#arry[*]}`与`${#arry[@]}`表示数组的元素个数。
-
 ```shell
 # 
 arry=(1 1 1 1 1)
@@ -438,9 +395,7 @@ echo ${#arry[*]}
 ```
 
 ### 数组声明与初始化
-
 > shell中使用括号来表示数组，元素之间则使用`空格`来分隔
-
 ```shell
 # 等号两边不能空格
 arrary_name=(ele1 ele2 ele3 ... elen)
@@ -453,9 +408,7 @@ declare -a arr=(1 1 1 1 1 1)
 ```
 
 ### 访问数组元素
-
 + 访问单个元素
-
 ```shell
 # 数组名[索引]
 $(arry_name[index]) #没有这个 x
@@ -469,7 +422,6 @@ echo $(arry[2]) # 错误示例，没有使用括号访问，只有中括号
 ```
 
 + 访问所有元素
-
 ```shell
 ${arry[*]}
 ${arry[@]}
@@ -479,7 +431,6 @@ ${arry[@]}
 + 使用`declare -a`语句可加速后面数组的操作速度(未验证)
 
 ### 删除数组
-
 ```shell
 # 删除特定元素
 unset array_name[index]
@@ -489,9 +440,7 @@ unset array_name
 ```
 
 ### 数组遍历
-
 + 方式一：
-
 ```shell
 # 不带数组下标
 for ele in ${arry_name[@]}
@@ -502,7 +451,6 @@ done
 ```
 
 + 方式二
-
 ```shell
 # 标准for
 for(( i=0;i<${#arry_name[*]};i++)) do
@@ -511,7 +459,6 @@ done
 ```
 
 + 方式三
-
 ```shell
 # 带数组下标控制
 for i in ${!arry_name[@]}
@@ -521,7 +468,6 @@ done
 ```
 
 + 方式四
-
 ```shell
 # while
 i=0
@@ -533,15 +479,12 @@ done
 ```
 
 ## 分支与循环控制
-
 > 在使用分支前，我们需要先了解一下条件，通过测试命令返回的结果，if分支才能接受。
 >
 > 而条件测试实际上是可以单独使用的，不一定需要if。
 
 ### test(测试命令)
-
 #### 格式
-
 ```shell
 # 格式一
 test 条件表达式
@@ -554,7 +497,6 @@ test 条件表达式
 ```
 
 #### 示例
-
 ```shell
 # 测试1
 test 5 -gt 3
@@ -574,9 +516,7 @@ echo $? #结果为0
 ```
 
 ### if
-
 > `if/then`结构用来判断命令列表的`退出状态码`是否为`0`
-
 ```shell
 # 单分支
 if [ condition ];then
@@ -610,9 +550,7 @@ fi
 ```
 
 #### 整数比较
-
 > 前面已经说过了
-
 **注意：**命令与命令之间使用`&&`和`||`表示逻辑与、或。（有短路效应）
 
 | 运算符 |     英文全称     |  中文描述  | 示例 |
@@ -635,11 +573,9 @@ fi
 ```
 
 #### 组合
-
 + `-a,&&`:与
 + `-o,||`:或
 + `!`:非
-
 ```shell
 # 测试一
 if [ 0 ];then
@@ -771,7 +707,6 @@ fi
 |   `-a`    | 是否为不空。非空-1，空-0     |
 
 #### [],[[|]],(())分辨
-
 > 以上都是test(测试)命令
 #### if中的正则表达式
 语法格式如下：
@@ -781,9 +716,7 @@ fi
 ```
 ....
 ### for
-
 + 语法
-
 ```shell
 # [list]表示一个列表
 for ele in [list];do
@@ -797,7 +730,6 @@ done
 ```
 
 + 实例
-
 ```shell
 for i in 1 2 3 4 5;do
 	echo $i
@@ -810,9 +742,7 @@ done
 ```
 
 ### while
-
 + 语法
-
 ```shell
 while [ condition ];do
 	command
@@ -821,11 +751,8 @@ done
 ```
 
 ### until
-
 > 与`while`相反。如果`condition`为`false`则进入循环。
-
 + 语法
-
 ```shell
 until condition;do
 	command1
@@ -834,17 +761,13 @@ done
 ```
 
 ### break 和 continue
-
 > 用法与C语言一致，不在赘述。
 
 ### case
-
 > `case`类似于C语言中的`switch`语句.
 >
 > 因为`default`缘故必会执行，一般会用来显示`help`信息
-
 + 语法
-
 ```shell
 case arg/expression in
 	condition1)
@@ -865,7 +788,6 @@ esac
 ```
 
 + condition的正则
-
 condition支持简单的正则表达式，如下：
 
 | 用法  | 说明              |      |
@@ -877,7 +799,6 @@ condition支持简单的正则表达式，如下：
 | \|    | 或                |      |
 
 + 实例
-
 ```shell
 #已进行shellcheck检查
 echo "Please input your Score : "
@@ -902,11 +823,8 @@ esac # 注意结尾不能少
 ```
 
 ### select
-
 > 与`case`语句类似
-
 + 语法
-
 ```shell
 select arg in [list];do
 	command_1
@@ -917,7 +835,6 @@ done
 ```
 
 + 实例
-
 ```shell
 select arg in 33 44 55 66 77;do
 	echo "select number="$arg
@@ -933,15 +850,11 @@ done
 ```
 
 ## 函数
-
 > 函数：实现一系列操作的`代码块(完成特定的task)`。一个函数就是一个子程序。
 >
 > 目的：提高代码质量
-
 ### 自定义函数
-
 + 语法
-
 ```shell
 # 方式1
 function func_name()
@@ -959,19 +872,14 @@ func_name()
 	[return value] #可选
 }
 ```
-
 **<font color=red>注意:</font>** 函数括号中不填参数，而是由`$1 ... $n`来访问
 
 ### 函数使用
-
 > shell中直接使用函数名字即可
-
 ```shell
 func_name [param_1] [param_2] [param_3] ... [param_n]
 ```
-
 + 实例
-
 ```shell
 function add()
 {
@@ -982,9 +890,7 @@ add 1 2
 ```
 
 ### 函数返回值
-
 + 返回数值
-
 ```shell
 # 使用return可返回0-255的数值
 function max()
@@ -997,9 +903,7 @@ echo "max value = $?"
 ```
 
 
-
 + 返回串
-
 ```shell
 # 使用echo返回字符串
 function min()
@@ -1013,15 +917,12 @@ result=$(min 12 65)
 echo $result
 ```
 ### 系统函数
-
 > 暂时未使用到
 
 ## 字符串的显示颜色
-
 > ANSI定义可屏幕属性相关颜色输出的转义码来表示。一般搜索CSI序列可得到更多信息。
 >
 > 一般会看到打印信息中显示特殊的颜色。通过`echo`带颜色属性，以及`参数 -e`。语法格式如下：
-
 ```shell
 # 方法1
 echo -e "\033[字背景颜色;文字颜色m 字符串\033[0m"
@@ -1029,7 +930,6 @@ echo -e "\033[字背景颜色;文字颜色m 字符串\033[0m"
 # 方法2
 echo -e "\e[字背景颜色;文字颜色m 字符串\e[0m"
 ```
-
 **<font color=yellow>说明：</font>**`-e`让`echo`启用`转义序列`。其中字体或者背景等编号都会以`m`结尾。
 
 |             颜色              | 字体颜色  | 背景颜色  | 显示控制说明                        |
@@ -1065,7 +965,6 @@ echo -e "\e[字背景颜色;文字颜色m 字符串\e[0m"
 > 更多信息参考:https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
 操作示例：
-
 ```shell
 # 只定义字体颜色
 echo -e "\e[31mhere are my books\e[0m"
@@ -1078,7 +977,6 @@ echo -e "\e[4;5;37;31mhere are my books\e[0m"
 ```
 
 ## IO重定向
-
 > 常用重定向相关的`文件描述符`有以下三个：
 
 | 文件描述符号 | 解释   | 命令       | 设备      |
