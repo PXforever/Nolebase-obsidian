@@ -18,8 +18,8 @@ sudo cp clash-linux-amd64 /usr/sbin/
 接着又两种配置方式：
 ## 方法1(从Windows获取)
 在`clash for windows`:
-![[笔记/01 附件/file-20241024225918713.png|笔记/01 附件/file-20241024225918713.png]]
-![[笔记/01 附件/file-20241025152719289.png|笔记/01 附件/file-20241025152719289.png]]
+![[笔记/01 附件/Clash For Linux使用方法/file-20241024225918713.png|笔记/01 附件/Clash For Linux使用方法/file-20241024225918713.png]]
+![[笔记/01 附件/Clash For Linux使用方法/file-20241025152719289.png|笔记/01 附件/Clash For Linux使用方法/file-20241025152719289.png]]
 外层的`Country.mmdb`和`profiles`目录中有一个`xxxx.yml`
 复制到`Linux`系统上，然后：
 ```shell
@@ -32,7 +32,7 @@ cp Country.mmdb ~/.config/clash/
 ```shell
 clash-linux-amd64
 ```
-![[笔记/01 附件/file-20241024230140257.png|笔记/01 附件/file-20241024230140257.png]]
+![[笔记/01 附件/Clash For Linux使用方法/file-20241024230140257.png|笔记/01 附件/Clash For Linux使用方法/file-20241024230140257.png]]
 
 ## 方法2（不推荐）
 我们有订阅地址，需要下载配置文件：
@@ -52,12 +52,12 @@ https://wiki.metacubex.one/config/
 
 # 配置
 我们可以通过网站：`https://clash.razord.top/#/settings`进行配置：
-![[笔记/01 附件/file-20241025152928224.png|笔记/01 附件/file-20241025152928224.png]]
-![[笔记/01 附件/file-20241025153246997.png|笔记/01 附件/file-20241025153246997.png]]
-![[笔记/01 附件/file-20241025153324295.png|笔记/01 附件/file-20241025153324295.png]]
+![[笔记/01 附件/Clash For Linux使用方法/file-20241025152928224.png|笔记/01 附件/Clash For Linux使用方法/file-20241025152928224.png]]
+![[笔记/01 附件/Clash For Linux使用方法/file-20241025153246997.png|笔记/01 附件/Clash For Linux使用方法/file-20241025153246997.png]]
+![[笔记/01 附件/Clash For Linux使用方法/file-20241025153324295.png|笔记/01 附件/Clash For Linux使用方法/file-20241025153324295.png]]
 注意外部控制设置，设置用与后台一致就行，一般不需要设置，错误的话可能导致无法打开该网页。
 接着设置代理：
-![[笔记/01 附件/file-20241025153449484.png|笔记/01 附件/file-20241025153449484.png]]![[笔记/01 附件/file-20241025153620782.png|笔记/01 附件/file-20241025153620782.png]]
+![[笔记/01 附件/Clash For Linux使用方法/file-20241025153620782.png|笔记/01 附件/Clash For Linux使用方法/file-20241025153620782.png]]
 然后就OK了。
 你也可以通过在`.bashrc`中添加：
 ```shell
