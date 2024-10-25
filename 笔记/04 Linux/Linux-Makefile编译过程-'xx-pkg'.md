@@ -85,7 +85,7 @@ make -j 24 \
 + **`.tar.gz`** 是一个压缩文件格式，表示该文件是经过 Gzip 压缩的 tar 包（归档文件）。
 + **`debian.tar.gz`** 是 Debian 打包系统中的标准文件，它包含了该包的 **Debian 特定文件和元数据**，用于将上游的源代码构建为 Debian 软件包。
 文件内容：
-![[笔记/01 附件/file-20241016150157599.png|笔记/01 附件/file-20241016150157599.png]]
+![[笔记/01 附件/Linux-Makefile编译过程-'xx-pkg'/file-20241016150157599.png|笔记/01 附件/Linux-Makefile编译过程-'xx-pkg'/file-20241016150157599.png]]
 里面还包含了源代码`*.c`文件。
 我们再来试试`binary`：
 ```shell
@@ -132,9 +132,9 @@ commit:36862e14e31611f9786622db366327209a7aede7		(2023/5/15)
 commit:fe66b5d2ae72121c9f4f705dbae36d4c3e9f3812		(2023/7/24)
 修改install_kernel_headers内容：
 ```
-![[笔记/01 附件/file-20241017112303818.png|笔记/01 附件/file-20241017112303818.png]]
+![[笔记/01 附件/Linux-Makefile编译过程-'xx-pkg'/file-20241017112303818.png|笔记/01 附件/Linux-Makefile编译过程-'xx-pkg'/file-20241017112303818.png]]
 图中被删除的功能移动到文件：`scripts/package/install-extmod-build`中。而该文件是被`scripts/package/kernel.spec`调用：
-![[笔记/01 附件/file-20241017112644269.png|笔记/01 附件/file-20241017112644269.png]]
+![[笔记/01 附件/Linux-Makefile编译过程-'xx-pkg'/file-20241017112644269.png|笔记/01 附件/Linux-Makefile编译过程-'xx-pkg'/file-20241017112644269.png]]
 而`kernel.spec`文件是在文件`scripts/Makefile.package`中构建`RPM`包才会被调用的，所以可以得到一个结论，就是构建原先具有完整路径`linux-headers.xx（deb.rmp）`，`debain`不再提供，转而是由`rpm`提供。所以在`6.6`版本开始，如果你使用`make deb-pkg`会得到`linux-headers-xxx.deb`只含有简单的头文件，如下图所示：
-![[笔记/01 附件/file-20241017113302691.png|笔记/01 附件/file-20241017113302691.png]]
+![[笔记/01 附件/Linux-Makefile编译过程-'xx-pkg'/file-20241017113302691.png|笔记/01 附件/Linux-Makefile编译过程-'xx-pkg'/file-20241017113302691.png]]
 结论：如果我们想编译一个简单的`内核构建环境`,可使用`make deb-pkg`，如果我们想编译完整的，需要使用`make rpm-pkg`。或者使用`linux-upstream-xxxx.tar.gz`。
