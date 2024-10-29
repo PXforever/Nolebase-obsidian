@@ -170,14 +170,14 @@ __initcall__kmod_evdev__412_1441_evdev_init6:
 ```
 这里的`__PASTE`是一个拼接函数，主要是将`a`和`b`拼接起来。这里有几个重要的定义与内建变量：
 + `__KBUILD_MODNAME__`：它是一个宏定义，是由`makfile`控制的，在编译`evdev.c`过程中会自动判断该模块的名称并设置，我们可以在`evdev.c`目录下找到隐藏文件`.evdev.o.cmd`，里面有该宏定义。
-  ![[笔记/01 附件/file-20241026230538013.png|笔记/01 附件/file-20241026230538013.png]]
+  ![[笔记/01 附件/Linux源码分析-module_init/file-20241026230538013.png|笔记/01 附件/Linux源码分析-module_init/file-20241026230538013.png]]
 + `__COUNTER__`：它是一个`GCC`内建的变量，但是GCC手册并没有说明，我们参考[网络](https://blog.csdn.net/qq_36428903/article/details/132410271)上的解释大致可以理解该变量使用一次就自增一次。
 那么该宏在这里的展开为：
 ```c
 kmod_evdev__412_1441_evdev_init
 ```
 当热，`__COUNTER__`是无法预测展开的，我们从
-![[笔记/01 附件/file-20241026231113682.png|笔记/01 附件/file-20241026231113682.png]]
+![[笔记/01 附件/Linux源码分析-module_init/file-20241026231113682.png|笔记/01 附件/Linux源码分析-module_init/file-20241026231113682.png]]
 上面这些文件获取(实际上上图是`__initcall_name`的，而`__initcall_id`是其中部分)。
 
 # 总结
