@@ -60,7 +60,8 @@ void test_function(void)
 	// 一个简单的函数用于测试 
 }
 // 使用 %pS 和 %ps 输出函数地址的符号信息 
-printk(KERN_INFO "Function symbol with %%pS: %pS\n", test_function); printk(KERN_INFO "Function symbol with %%ps: %ps\n", test_function);
+printk(KERN_INFO "Function symbol with %%pS: %pS\n", test_function);
+printk(KERN_INFO "Function symbol with %%ps: %ps\n", test_function);
 ```
 ![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106113508389.png|笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106113508389.png]]
 上面的`0x0`表示函数的执行位置(可以参考`call trace`)，然后`0x18`表示函数名(`void test_function(void)`)的长度。
