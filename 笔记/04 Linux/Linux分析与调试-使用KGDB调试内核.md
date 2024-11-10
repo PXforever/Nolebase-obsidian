@@ -3,7 +3,7 @@ share: "true"
 ---
 
 # 前言
-
+>略.
 # 确定当前内核开启调试
 在调试前我们需要确定该系统是否开启了支持内核调试：
 ```shell
@@ -11,11 +11,17 @@ share: "true"
 zcat /proc/config.gz
 
 # 确认是否有如下配置：
-CONFIG_DEBUG_KERNEL=y 
-CONFIG_DEBUG_INFO=y 
-CONFIG_GDB_SCRIPTS=y 
-CONFIG_KGDB=y 
+CONFIG_DEBUG_KERNEL=y
+CONFIG_DEBUG_INFO=y
+CONFIG_GDB_SCRIPTS=y
+CONFIG_KGDB=y
 CONFIG_KGDB_SERIAL_CONSOLE=y
+```
+```shell
+# 部分版本需要依赖于下面的开启,具体需要使用make nenuconfig查看依赖情况
+CONFIG_DEBUG_INFO_DWARF5=y
+# 或者
+CONFIG_DEBUG_INFO_DWARF4=y
 ```
 或者：
 ```shell
@@ -32,7 +38,8 @@ ls /proc/sys/kernel/debug
 lsmod | grep kgdboc
 ```
 # 获取源码
-> 如果设备没有开启KGDB的话，我们需要编译源码来开启。
+> 如果(非嵌入式)设备没有开启KGDB的话，我们需要编译源码来开启。
+> 这里主要指的是如`ubuntu`系统
 ## 下载
 ```shell
 sudo apt search linux-source
@@ -187,9 +194,9 @@ dumpcpu                             Same as dumpall but only tasks on cpus
 
 # 示例1(ubuntu启动KGDB)
 > 使用如下环境操作
-> + virtual box虚拟机
-> + ubuntu22.04，Server(服务器)版本作为目标机器(target)
-> + ubuntu22.04，Server(服务器)版本作为主机调试(host)
+> + `virtual box`虚拟机
+> + `ubuntu22.04`，`Server(服务器)`版本作为目标机器(**target**)
+> + `ubuntu22.04`，`Server(服务器)`版本作为主机调试(**host**)
 
 `target`指的是被调试的设备，`host`设备则指的是监视，和控制调试进程的设备。
 **注意：因为在调试时希望可以看源码，我们在配置和编译好`target`源码后复制该虚拟机。**
@@ -323,12 +330,12 @@ echo g > /proc/sysrq-trigger
 
 # 示例2(嵌入式系统启动KGDB)
 > 这是一个嵌入式的调试过程，使用设备与软件如下：
-> + A40i，Kernel-5.10.149， Qt5.10
-> + ubuntu+vmware
+> + `A40i，Kernel-5.10.149， Qt5.10`
+> + `ubuntu+vmware`
 > + 串口工具
 ## 配置
-先试用`deconfig`或`./build.sh menuconfig`开启`KGDB`和`DEBUG`。
-然后编译，烧录。
++ 先试用`deconfig`或`./build.sh menuconfig`开启`KGDB`和`DEBUG`。
++ 然后编译，烧录。
 ## 链接调试
 在目标机器使用：
 ```shell
@@ -381,8 +388,8 @@ target remote /dev/ttyUSB0
 
 ^39124e
 >这里使用的设备是：
->+ A40i，Kernel5.10，QT5.10 (==target==)
->+ Ubuntu22 ( ==Host==)
+>+ `A40i，Kernel5.10，QT5.10 (target)`
+>+ `Ubuntu22 (Host)`
 >+ 串口调试
 
 `target`先进入`KGDB`
@@ -435,8 +442,8 @@ cat status
 # 示例4(调试用户定义模块)
 > 在这里，我们需要编写一个简单的模块，然后进行调试。
 >这里使用的设备是：
->+飞凌 A40i，Kernel5.10，QT5.10 (==target==)
->+ Ubuntu22 ( ==Host==)
+>+`飞凌 A40i，Kernel5.10，QT5.10 (target)`
+>+ `Ubuntu22 (Host)`
 >+ 串口调试
 
 ## 编译及加载
@@ -487,7 +494,7 @@ cat /proc/kallsyms | grep lesson_4| sort
 ```shell
 # cd cat /sys/module/<module_name>/sections/
 cat /sys/module/lesson_4/sections
-ls -all # 如果是ls，"."开头的文件会隐藏，看不到
+ls -all     # 如果是ls，"."开头的文件会隐藏，看不到
 cat .text
 ```
 ![[笔记/01 附件/Linux分析与调试-使用KGDB调试内核/image-20240727211524703.png|笔记/01 附件/Linux分析与调试-使用KGDB调试内核/image-20240727211524703.png]]
@@ -502,10 +509,11 @@ cat .text
 # vmlinux在内核源码的输出目录，我们现需要使用vmlinux进入调试
 # SDK_SOURCE/OKA40i-linux-sdk/out/toolchain/gcc-linaro-5.3.1-2016.05-x86_64_arm-linux-gnueabi/bin/arm-linux-gnueabi-gdb
 
+# sudo <交叉gdb位置> <内核vmlinx位置>
 sudo /home/forlinx/work2/OKA40i-linux-sdk/out/toolchain/gcc-linaro-5.3.1-2016.05-x86_64_arm-linux-gnueabi/bin/arm-linux-gnueabi-gdb /home/forlinx/work2/OKA40i-linux-sdk/out/a40i_h/kernel/build/vmlinux
 ```
 ![[笔记/01 附件/Linux分析与调试-使用KGDB调试内核/image-20240727214332000.png|笔记/01 附件/Linux分析与调试-使用KGDB调试内核/image-20240727214332000.png]]
-然后设置波特率参数，接着载入当前驱动的模块文件：
+然后设置**波特率参数**，**连接TTY(串口)**，接着载入当前驱动的模块文件：
 ```shell
 #地址是上面获取的
 add-symbol-file lesson_4.ko 0xbf024000
@@ -532,10 +540,46 @@ mknode /dev/scull0 c 241 0
 ```shell
 echo 9 > /dev/scull0
 ```
-之后就会进入中断，我们可以看看`host`端。
+之后就会进入中断，我们可以看看`host`端的中断状态。
 
+# 示例5(嵌入式系统开机启动KGDB)
+> 上面演示的都是开机后使用`sys Rq`进入的调试，但如果我们需要调试开机过程中的代码，则需要在开机后就进入`KGDB`。
+> + `RK3588 kernel-6.1.75`
+> + `ubuntu-22.0`
 
+**注意**：`ARM`设备似乎无法在更早的时候进入`KGDB`，而`X86`可以更早进入`KGDB`，所以`RK3588`无法调试比较早的代码，具体原因可以查看[[Linux源码分析-KGDB|Early_KGDB]]。
+## 配置
+```c
+CONFIG_DEBUG_KERNEL=y
+CONFIG_DEBUG_INFO=y
+CONFIG_DEBUG_INFO_DWARF5=y
+CONFIG_KGDB=y 
+CONFIG_KGDB_SERIAL_CONSOLE=y
+CONFIG_KGDB_KDB=y
+```
+这里的`CONFIG_KGDB_KDB`是可选选项，它的作用是，在你进入`KGDB`中断时(错误,主动进入)，你可以通过串口命令行进行基本的调试。
+![[笔记/01 附件/Linux分析与调试-使用KGDB调试内核/file-20241108114313679.png|笔记/01 附件/Linux分析与调试-使用KGDB调试内核/file-20241108114313679.png]]
 
+## 启动
+我们可以将启动命令行加入到开机`command line`，可以通过以下方式：
++ `uboot 命令行`
+```shell
+setenv bootargs ${bootargs} kgdboc_earlycon=uart kgdbwait
+saveenv
+boot
+```
++ `设备树`
+```shell
+# 注意记得将原来的bootargs，完全复制过来，再加上kgdboc_earlycon=uart kgdbwait
+&chosen {
+	bootargs = "kgdboc_earlycon=uart kgdbwait earlycon=uart8250,mmio32,0xfeb50000 console=ttyFIQ0 irqchip.gicv3_pseudo_nmi=0 root=PARTUUID=614e0000-0000 rw rootwait";
+};
+```
+这样我们就可以在开机时进入`KGDB`：
+![[笔记/01 附件/Linux分析与调试-使用KGDB调试内核/file-20241108114812886.png|笔记/01 附件/Linux分析与调试-使用KGDB调试内核/file-20241108114812886.png]]
+接下来的调试过程可以参考上面的示例。
+**注意**：这里的启动命令行与上面的`kgdboc=ttyXXXX,115200 kgdbwait`不一样，这是因为在开机初期，`TTY`模块还未加载，只有基础的`uart`，所以如果`RK3588`**进入系统后**，还是可以像上面一样使用`kgdboc=ttyXXXX,115200 kgdbwait`进入`KGDB`模式。
 
-
-
+## 其他
+当然我们也可以通过在代码中注入`kgdb_breakpoint();`,比如在按键中加入该中断：
+![[笔记/01 附件/Linux分析与调试-使用KGDB调试内核/file-20241108115544095.png|笔记/01 附件/Linux分析与调试-使用KGDB调试内核/file-20241108115544095.png]]
