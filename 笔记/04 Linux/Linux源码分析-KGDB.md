@@ -225,9 +225,9 @@ noinline void kgdb_breakpoint(void) //该函数就是进入调试模式的函数
 ![[Linux源码分析-KGDB/file-20241025142115306.png]]
 还有在`lib/Kconfig.kgdb`:
 ![[Linux源码分析-KGDB/file-20241025142831346.png]]
-所以在`RK3588`上，我们并不能在开机时立马进行调试。
+所以在`RK3588(ARM64)`上，我们并不能在开机时立马进行调试。
 
-幸运的是，我们还可以在后段进入调试，具体是在进行`opt_kgdb_wait`失败后，我们可以通过如下的函数栈再次进入调试：
+幸运的是，我们还可以在**后段**进入调试，具体是在进行`opt_kgdb_wait`失败后，我们可以通过如下的函数栈再次进入调试：
 ```c
 start_kernel
 	dbg_late_init
