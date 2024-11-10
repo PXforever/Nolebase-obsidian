@@ -63,7 +63,7 @@ void test_function(void)
 printk(KERN_INFO "Function symbol with %%pS: %pS\n", test_function);
 printk(KERN_INFO "Function symbol with %%ps: %ps\n", test_function);
 ```
-![[笔记/01 附件/file-20241106113508389.png|Linux小技巧-printk的扩展打印/file-20241106113508389.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106113508389.png|Linux小技巧-printk的扩展打印/file-20241106113508389.png]]
 上面的`0x0`表示函数的执行位置(可以参考`call trace`)，然后`0x18`表示函数名(`void test_function(void)`)的长度。
 
 ### `R`
@@ -73,7 +73,7 @@ printk(KERN_INFO "Function symbol with %%pSr (with offset): %pSr\n", test_functi
 printk(KERN_INFO "Function symbol with %%psR (with offset): %psR\n", test_function);
 printk(KERN_INFO "Function symbol with %%psr (with offset): %psr\n", test_function);
 ```
-![[笔记/01 附件/file-20241106114504800.png|Linux小技巧-printk的扩展打印/file-20241106114504800.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106114504800.png|Linux小技巧-printk的扩展打印/file-20241106114504800.png]]
 
 ### `Sb`
 ```c
@@ -81,7 +81,7 @@ printk(KERN_INFO "Function symbol with %%psr (with offset): %psr\n", test_functi
 printk(KERN_INFO "Function symbol with %%pSb (backtrace with build ID): %pSb\n", test_function); 
 printk(KERN_INFO "Function symbol with %%pSRb (backtrace with offset and build ID): %pSRb\n", test_function);
 ```
-![[笔记/01 附件/file-20241106115145133.png|Linux小技巧-printk的扩展打印/file-20241106115145133.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106115145133.png|Linux小技巧-printk的扩展打印/file-20241106115145133.png]]
 
 ### `Ff`
 与`Ss`基本一致。
@@ -91,7 +91,7 @@ printk(KERN_INFO "Function symbol with %%pSRb (backtrace with offset and build I
 void (*func_ptr)(void) = test_function;
 printk(KERN_INFO "Pointer symbol with %%pB: %pB\n", func_ptr);
 ```
-![[笔记/01 附件/file-20241106133606220.png|Linux小技巧-printk的扩展打印/file-20241106133606220.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106133606220.png|Linux小技巧-printk的扩展打印/file-20241106133606220.png]]
 这里不知道为啥会只有一个地址，可能是没有开启特定的`CONFIG`。
 
 ### `Bb`
@@ -111,7 +111,7 @@ static struct resource my_resource = {
 printk(KERN_INFO "Resource info with %%pR: %pR\n", &my_resource);
 printk(KERN_INFO "Resource info with %%pr: %pr\n", &my_resource);
 ```
-![[笔记/01 附件/file-20241106134310974.png|Linux小技巧-printk的扩展打印/file-20241106134310974.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106134310974.png|Linux小技巧-printk的扩展打印/file-20241106134310974.png]]
 这个是用来打印`struct resource` 的，具体各部分：
 - **`mem`**：表示这是一个内存资源（Memory Resource）。这个标志通常用于区分不同类型的资源，例如内存、I/O 区域、DMA 通道等。
 - **`0x00000000-0x0000001f`**：这是该内存资源的地址范围。从 `0x00000000` 到 `0x0000001f`。表示这块资源从内存地址 `0x00000000` 开始，到 `0x0000001f` 结束，总共有 32 字节的内存区域。
@@ -136,7 +136,7 @@ printk(KERN_INFO "MAC 地址(无冒号): %pm\n", mac_addr);
 printk(KERN_INFO "MAC 地址(短线): %pMF\n", mac_addr);
 printk(KERN_INFO "反向顺序的 MAC 地址: %pMR\n", mac_addr);  // 蓝牙反向顺序格式
 ```
-![[笔记/01 附件/file-20241106144613054.png|Linux小技巧-printk的扩展打印/file-20241106144613054.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106144613054.png|Linux小技巧-printk的扩展打印/file-20241106144613054.png]]
 
 ### 网络地址
 #### `I`与`i`
@@ -162,7 +162,7 @@ printk(KERN_INFO "IPv6 地址: %pI6\n", &ipv6_addr);  // 使用 %pI6 格式化 
 printk(KERN_INFO "IPv4 地址: %pi4\n", &ipv4_addr);  // 使用 %pi4 格式化 IPv4 地址
 printk(KERN_INFO "IPv6 地址: %pi6\n", &ipv6_addr);  // 使用 %pi6 格式化 IPv6 地址
 ```
-![[笔记/01 附件/file-20241106150924348.png|Linux小技巧-printk的扩展打印/file-20241106150924348.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106150924348.png|Linux小技巧-printk的扩展打印/file-20241106150924348.png]]
 这里`i`表示的是`RAW`格式的IP地址，如果是`IPv4`，那么是使用`.`分开，并加上前导`0`。如果是`IPv6`，则是没有分隔符的样子。
 
 #### `I`与`[S][pfs]`
@@ -212,7 +212,7 @@ printk("IPv6 with scope: %pISs\n", &sin6);
 /* 5. 组合所有修饰符 [pfs] */
 printk("IPv6 all modifiers: %pISpfs\n", &sin6);
 ```
-![[笔记/01 附件/file-20241106152056763.png|Linux小技巧-printk的扩展打印/file-20241106152056763.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106152056763.png|Linux小技巧-printk的扩展打印/file-20241106152056763.png]]
 格式说明：
 + `%pIS` - 基本格式，自动检测是IPv4还是IPv6
 + 修饰符说明：
@@ -241,7 +241,7 @@ printk("Big endian (%%pI4b):     %pI4b\n", &be_addr);
 /* 小端序 [l] */
 printk("Little endian (%%pI4l):   %pI4l\n", &host_addr);
 ```
-![[笔记/01 附件/file-20241106152911104.png|Linux小技巧-printk的扩展打印/file-20241106152911104.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106152911104.png|Linux小技巧-printk的扩展打印/file-20241106152911104.png]]
 主要区别和说明：
 1. `%I4` vs `%pI4`：
     - `%I4` 接受直接的 u32/__be32 值
@@ -296,7 +296,7 @@ printk(KERN_INFO "ESCAPE_NP: %*pEp\n", sizeof(special_chars), special_chars);
 /* ESCAPE_SPACE (s) - 转义空格字符 */
 printk(KERN_INFO "ESCAPE_SPACE: %*pEs\n", sizeof(spaces_str), spaces_str);
 ```
-![[笔记/01 附件/file-20241106161015069.png|Linux小技巧-printk的扩展打印/file-20241106161015069.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106161015069.png|Linux小技巧-printk的扩展打印/file-20241106161015069.png]]
 
 ### `U`
 ```c
@@ -308,7 +308,7 @@ printk(KERN_INFO "大端 UPPER case: %pUB\n", &test_uuid);               
 printk(KERN_INFO "小端 lower case: %pUl\n", &test_uuid);                   // 小端小写
 printk(KERN_INFO "小端 UPPER case: %pUL\n", &test_uuid);                   // 小端大写
 ```
-![[笔记/01 附件/file-20241106163617812.png|Linux小技巧-printk的扩展打印/file-20241106163617812.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106163617812.png|Linux小技巧-printk的扩展打印/file-20241106163617812.png]]
 
 ### `V`
 ```c
@@ -328,7 +328,7 @@ void my_printk(const char *fmt, ...)
 const char *test_str = "测试字符串";
 my_printk("嵌套格式化字符串示例: int=%d, string=%s\n", 42, test_str);
 ```
-![[笔记/01 附件/file-20241106164534217.png|Linux小技巧-printk的扩展打印/file-20241106164534217.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106164534217.png|Linux小技巧-printk的扩展打印/file-20241106164534217.png]]
 这里`%pV`的作用是，打印`struct va_format`结构体中的字符串。
 
 ### `K`
@@ -423,7 +423,7 @@ printk(KERN_INFO "Hex dump with dash separator: %*phD\n", 16, test_buffer);
 printk(KERN_INFO "Hex dump with colon separator: %*phC\n", 16, test_buffer);
 printk(KERN_INFO "Hex dump with no separator: %*phN\n", 16, test_buffer);
 ```
-![[笔记/01 附件/file-20241106172001647.png|Linux小技巧-printk的扩展打印/file-20241106172001647.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106172001647.png|Linux小技巧-printk的扩展打印/file-20241106172001647.png]]
 
 
 ### `a[pd]`
@@ -520,7 +520,7 @@ else{
 	printk(KERN_INFO "Full compatible string: %pOFC\n", np);
 }
 ```
-![[笔记/01 附件/file-20241106181229188.png|Linux小技巧-printk的扩展打印/file-20241106181229188.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106181229188.png|Linux小技巧-printk的扩展打印/file-20241106181229188.png]]
 
 ### `fw[fP]`
 > 打印的是一个`fw_node`
@@ -535,7 +535,7 @@ printk(KERN_INFO "Firmware node information: %pfw\n", fw);
 printk(KERN_INFO "Firmware full name: %pfwf\n", fw);
 printk(KERN_INFO "Firmware node name: %pfwP\n", fw);
 ```
-![[笔记/01 附件/file-20241106181758048.png|Linux小技巧-printk的扩展打印/file-20241106181758048.png]]
+![[笔记/01 附件/Linux小技巧-printk的扩展打印/file-20241106181758048.png|Linux小技巧-printk的扩展打印/file-20241106181758048.png]]
 
 ### `x`
 > 当您确实想要打印地址时，用于打印指针。在使用 %px 打印指针之前，请考虑是否泄露了有关内核内存布局的敏感信息。`%px` 在功能上等同于 `%lx`（或 `%lu`）。`%px` 是首选，因为它更独特，更易于`grep`。如果将来我们需要修改内核处理打印指针的方式，我们将能够更好地找到调用点。
