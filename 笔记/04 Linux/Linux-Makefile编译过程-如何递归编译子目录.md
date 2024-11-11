@@ -134,6 +134,6 @@ subdir-ym := $(sort $(subdir-y) $(subdir-m) \
 好了，我们可以大致窥探其中的递归调用逻辑，现在我们需要再次通过调试来实际理解：
 ![[笔记/01 附件/Linux-Makefile编译过程-如何递归编译子目录/file-20241108164918078.png|笔记/01 附件/Linux-Makefile编译过程-如何递归编译子目录/file-20241108164918078.png]]
 我们也可以通过下图来进行理解：
-![[Linux-Makefile编译过程-如何递归编译子目录/PixPin_2024-11-08_18-07-39.jpg|Linux-Makefile编译过程-如何递归编译子目录/PixPin_2024-11-08_18-07-39.jpg]]
+![[笔记/01 附件/Linux-Makefile编译过程-如何递归编译子目录/PixPin_2024-11-08_18-07-39.jpg|笔记/01 附件/Linux-Makefile编译过程-如何递归编译子目录/PixPin_2024-11-08_18-07-39.jpg]]
 而其他目录的`kbuild-file`基本都是各个目录下的`Makefile`，因为他们里面有`obj-y`或者`obj-m`的定义。
 ![[笔记/01 附件/Linux-Makefile编译过程-如何递归编译子目录/file-20241108181336676.png|笔记/01 附件/Linux-Makefile编译过程-如何递归编译子目录/file-20241108181336676.png]]
