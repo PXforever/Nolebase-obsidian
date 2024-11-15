@@ -195,25 +195,25 @@ $ cat 'C:UsersKwongad.gitconfig'
 
 
 
-在工作区根目录下创建“.gitignore”文件，文件中配置不需要进行版本管理的文件、文件夹。“.gitignore”文件本身是被纳入版本管理的，可以共享。有如下规则：
+在工作区根目录下创建“`.gitignore`”文件，文件中配置不需要进行版本管理的文件、文件夹。“`.gitignore`”文件本身是被纳入版本管理的，可以共享。有如下规则：
 
 - \#符号开头为注释。
 - 可以使用Linux通配符。
-  - 星号（*）代表任意多个字符，
-  - 问号（？）代表一个字符，
+  - 星号( \* )代表任意多个字符，
+  - 问号( ? )代表一个字符，
   - 方括号（`[abc]`）代表可选字符范围，
   - 大括号（`{string1,string2,...}`）代表可选的字符串等。
-- 感叹号（!）开头：表示例外规则，将不被忽略。
+- 感叹号( ! )开头：表示例外规则，将不被忽略。
 - 路径分隔符（`/f`）**开头**：，表示要忽略**根目录**下的**文件**f。
 - 路径分隔符（`f/`）**结尾**：，表示要忽略**文件夹**`f`下面的所有文件。
 
 ```
 #为注释
-*.txt #忽略所有“.txt”结尾的文件
-!lib.txt #lib.txt除外
-/temp #仅忽略项目根目录下的temp文件,不包括其它目录下的temp，如不包括“src/temp”
-build/ #忽略build/目录下的所有文件
-doc/*.txt #会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
+*.txt       #忽略所有“.txt”结尾的文件
+!lib.txt    #lib.txt除外
+/temp       #仅忽略项目根目录下的temp文件,不包括其它目录下的temp，如不包括“src/temp”
+build/      #忽略build/目录下的所有文件
+doc/*.txt   #会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 ```
 
 > 各种语言项目的常用.gitignore文件配置：https://github.com/github/gitignore
@@ -226,11 +226,11 @@ doc/*.txt #会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 
 > 对于Git，建议用命令行，这样你才能真的理解Git的思想？其实都只是工具而已，适合自己的就是最好的，没必要纠结，多写点Bug更重要！
 
-- TortoiseGit：小乌龟，SVN时代就很流行的代码管理GUI利器。
+- `TortoiseGit`：小乌龟，SVN时代就很流行的代码管理GUI利器。
   - 只有Windows版本，支持中文，需要单独下载安装中文语言包。
   - 开源，免费，与文件管理器的良好集成。
   - 内置冲突对比解决工具。
-- Sourcetree：SourceTree是老牌的Git GUI管理工具了，也号称是最好用的Git GUI工具。
+- `Sourcetree`：SourceTree是老牌的Git GUI管理工具了，也号称是最好用的Git GUI工具。
   - 适用于 Windows 和 Mac 系统，内置中文版，自动识别语言。
   - 免费、功能强大，使用简单。
   - 功能丰富，基本操作和高级操作都设计得非常流畅，适合初学者上手，支持Git Flow。
@@ -241,63 +241,36 @@ doc/*.txt #会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 ## SourceTree
 
 SourceTree的官网 下载安装包，支持Window、Mac系统，按照提示完成安装。
-
 - SourceTree支持管理多个仓库，通过+按钮，可选择多种方式添加仓库。
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntuaAB3fkAAB4sjVnQU8831.jpg|2dcbee86-05d3-11ee-962d-dac502259ad0.jpg]]
 
-
-
 - 然后就是可视化的仓库管理了，不用记住繁琐的指令（参数）了，可视化操作。
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntuaAF-LUAAN35IkjooQ900.png|2dd5df68-05d3-11ee-962d-dac502259ad0.png]]
 
-
-
 **4.2、TortoiseGit**
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntuaAaXghAAAO6iLFZkQ809.png|2dfa977c-05d3-11ee-962d-dac502259ad0.png]]
-
-
-
 TortoiseGit 官网下载安装包，及中文语言包，按照提示完成安装。小乌龟的Git是集成到[操作系统](https://m.elecfans.com/v/tag/527/)里的，直接右键文件夹就可以进行Git操作了。
 
 ![[笔记/01 附件/git-基础概念/wKgZomTntuaAFVdYAACcprB6B4Q271.jpg|2e149348-05d3-11ee-962d-dac502259ad0.jpg]]
 
-
-
 - 先进入设置：右键文件夹菜单 --> TortoiseGit --> Settings 进入设置，设置中文语言。
 - 小乌龟的各种Git操作都在右键菜单了，深度集成到了操作系统的资源管理器中了，文件图标也是有Git状态的，比较容易分辨。
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntuaADla_AACKSAHcSVA381.jpg|2e2f77b2-05d3-11ee-962d-dac502259ad0.jpg]]
 
 ![[笔记/01 附件/git-基础概念/wKgZomTntuaAawJ_AAKGabIe50c934.png|2e3c3e84-05d3-11ee-962d-dac502259ad0.png]]
 
-
-
 ## VSCode中的Git
-
 VSCode自带的Git工具基本已经可以满足日常使用了，既有可视化功能，也能敲命令，习惯了不就不用安装其他GUI工具了。不过还是可以再安装一些VSCode插件，来增强Git功能。
-
 - **GitLens**：在团队项目开发中非常实用，必备！！！用于快速查看代码提交历史记录，在代码上会显示最近的修改信息，包括提交者，只就这一点就值得[推荐](https://www.elecfans.com/v/)了。
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntuaAOjqAAACULfQ-OMI488.png|2e71b1c2-05d3-11ee-962d-dac502259ad0.png]]
-
-
-
 - **Git History**：可以轻松快速浏览Git文件操作历史记录的工具，可视化展示，操作简单。
-
 ------
 
 # Git使用入门
-
 ## 创建仓库
-
 创建本地仓库的方法有两种：
-
 - 一种是创建全新的仓库：`git init`，会在当前目录初始化创建仓库。
 - 另一种是克隆远程仓库：`git clone [url]`
-
 ```
 # 准备一个文件夹“KwebNote”作为仓库目录，命令行进入该文件夹
 Kwongad@Kwongad-T14 MINGW64 ~
@@ -312,17 +285,12 @@ Kwongad@Kwongad-T14 MINGW64 /d/Project_Files/github.kwong/KwebNote
 $ git init
 Initialized empty Git repository in D:/Project_Files/github.Kwong/KwebNote/.git/
 ```
-
 > **注意**：Git指令的执行，都需在仓库目录下。
 
 创建完多出了一个被隐藏的`.git`目录，这就是本地仓库`Git`的工作场所。
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntueAIUkVAAAKontZjhI003.png|2e93eef4-05d3-11ee-962d-dac502259ad0.png]]
 
-
-
-克隆远程仓库，如在`github`上创建的仓库：https://github.com/kwonganding/KWebNote.git”
-
+克隆远程仓库，如在`github`上创建的仓库：`https://github.com/kwonganding/KWebNote.git`
 ```
 $ git clone 'https://github.com/kwonganding/KWebNote.git'
 Cloning into 'KWebNote'...
@@ -334,18 +302,12 @@ Receiving objects: 100% (108/108), 9.36 KiB | 736.00 KiB/s, done.
 Resolving deltas: 100% (48/48), done.
 ```
 
-会在当前目录下创建“KWebNote”项目目录。
-
+会在当前目录下创建“`KWebNote`”项目目录。
 ![[笔记/01 附件/git-基础概念/wKgZomTntueAB9JnAACvp57EEYc875.jpg|2eb09054-05d3-11ee-962d-dac502259ad0.jpg]]
 
-
-
 ## 暂存区add
-
 可以简单理解为，`git add`命令就是把要提交的所有修改放到暂存区（Stage），然后，执行`git commit`就可以一次性把暂存区的所有修改提交到仓库。
-
 **指令描述**`git add [file1] [file2]`添加文件到暂存区，包括修改的文件、新增的文件`git add [dir]`同上，添加目录到暂存区，包括子目录`git add .`同上，添加**所有**修改、新增文件（未跟踪）到暂存区`git rm [file]`删除工作区文件，并且将这次删除放入暂存区
-
 ```
 # 添加指定文件到暂存区，包括被修改的文件
 $ git add [file1] [file2] ...
@@ -359,49 +321,30 @@ $ git rm [file1] [file2] ...
 # 改名文件，并且将这个改名放入暂存区
 $ git mv [file-original] [file-renamed]
 ```
-
 修改文件`“R.md”`，未暂存：
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntueAMbfqAAAz5SaURAI010.png|2eb98ba0-05d3-11ee-962d-dac502259ad0.png]]
 
-
-
 执行`git add .`暂存：
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntueAJHV4AACUlHTNz98280.jpg|2edbbe8c-05d3-11ee-962d-dac502259ad0.jpg]]
 
-
-
 ## 提交commit-记录
-
 `git commit`提交是以时间顺序排列被保存到数据库中的，就如游戏关卡一样，每一次提交（`commit`）就会产生一条记录：`id + 描述 + 快照内容`。
-
 - **commit id**：根据修改的文件内容采用摘要算法（`SHA1`）计算出不重复的40位字符，这么长是因为Git是分布式的，要保证唯一性、完整性，一般本地指令中可以只用前几位（6位）。即使多年以后，依然可通过id找到曾经的任何内容和变动，再也不用担心丢失了。
 - **描述**：针对本次提交的描述说明，建议**准确**填写，就跟代码中的注释一样，很重要。
 - **快照**：就是完整的版本文件，以对象树的结构存在仓库下`.git/objects`目录里，这也是`Git`效率高的秘诀之一。
-
 > `SHA1`是一种哈希算法，可以用来生成数据摘要
 >
 > Git不适合大的非文本文件，会影响计算摘要、快照的性能。
 
 多个提交就形成了一条时间线，每次提交完，会移动当前分支`master、HEAD`的“指针”位置。
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntueAHjSWAACZyO4DEck437.png|2ef2e6d4-05d3-11ee-962d-dac502259ad0.png]]
 
-
-
 `Sourcetree`上的历史记录：
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntueAcCKuAABYCZZlg90609.jpg|2f0e1b5c-05d3-11ee-962d-dac502259ad0.jpg]]
-
-
-
 > 一般情况，每完成一个小功能、一个Bug就可以提交一次，这样会形成比较清晰的历史记录。
 
 **指令：**
-
 **指令描述：**
-
 + `git commit -m '说明'`：提交变更，参数`-m`设置提交的描述信息，应该正确提交，不带该参数会进入说明编辑模式
 + `git commit -a`：参数`-a`，表示直接从工作区(修改的文件)提交到版本库，略过了`git add`步骤，==不包括新增的文件==
 + `git commit [file]`：提交暂存区的指定文件到仓库区。
@@ -416,10 +359,7 @@ $ git mv [file-original] [file-renamed]
 
 ![[笔记/01 附件/git-基础概念/wKgZomTntueAbYlmAAKmAoa69HE881.png|2f21b22a-05d3-11ee-962d-dac502259ad0.png]]
 
-
-
 通过`git log`指令可以查看提交记录日志，可以很方便的查看每次提交修改了哪些文件，改了哪些内容，从而进行恢复等操作。
-
 ```shell
 # 提交暂存区到仓库区
 $ git commit -m [message]
@@ -449,25 +389,18 @@ $ git log -n2 --oneline
 ```
 
 ## Git的“指针”引用们
-
 Git中最重要的就是提交记录了，其他如**标签**、**分支**、**HEAD**都对提交记录的“指针”引用，指向这些提交记录，理解这一点很重要。
-
 - 提交记录之间也存在“指针”引用，每个提交会指向其上一个提交。
 - **标签**：就是对某一个提交记录的的**固定**“指针”引用，取一个别名更容易记忆一些关键节点。存储在工作区根目录下`.git/efs/ags`。
 - **分支**：也是指向某一个提交记录的“指针”引用，“指针”位置可变，如提交、更新、回滚。存储在工作区根目录下`.git/efs/heads`。
 - **HEAD**：指向当前活动分支（最新提交）的一个“指针”引用，存在在`“.git/HEAD”`文件中，存储的内容为`“ref: refs/heads/master”`。
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntueAK83vAAEFT45KvRM481.png|2f52c91e-05d3-11ee-962d-dac502259ad0.png]]
 
-
-
 上图中：
-
 - `HEAD`始终指向当前活动分支，多个分支只能有一个处于活动状态。
 - 标签`t1`在某一个提交上创建后，就不会变了。而`分支、HEAD`的位置会改变。
 
 打开这些文件内容看看，就更容易理解这些“指针”的真面目了。
-
 ```shell
 # tag
 $ git tag -a 'v1' -m'v1版本'
@@ -488,15 +421,11 @@ Switched to branch 'dev'
 $ cat .git/HEAD
 ref: refs/heads/dev
 ```
-
 这里的主分支名字为`“main”`，是因为该仓库是从`Github`上克隆的，`Github`上创建的仓库默认主分支名字就是`“main”`，本地创建的仓库默认主分支名字为`“master”`。
-
 > **“指针”引用**：之所以用引号的“指针”，是为了便于统一和理解。和指针原理类似，都是一个指向，只是实际上可能更复杂一点，且不同的“指针”引用会有区别。
 
 ## 提交的唯一标识id，HEAD~n是什么意思？
-
 每一个提交都有一个唯一标识，主要就是提交的`hash`值`commit id`，在很多指令中会用到，如版本回退、拣选提交等，需要指定一个提交。那标识唯一提交有两种方式：
-
 - 首先就是`commit id`，一个40位编码，指令中使用的时候可以只输入前几位（6位）即可。
 - 还有一种就是`HEAD~n`，是基于当前`HEAD`位置的一个相对坐标。
   - `HEAD`表示当前分支的最新版本，是比较常用的参数。
@@ -505,7 +434,6 @@ ref: refs/heads/dev
   - `HEAD@{2}`在`git reflog`日志中标记的提交记录索引。
 
 通过`git log、git reflog`可以查看历史日志，可以看每次提交的唯一编号（`hash`）。区别是`git reflog`可以查看所有操作的记录（实际是`HEAD`变更记录），包括被撤销回退的提交记录。
-
 ```shell
 $ git reflog -n10
 5acc914 (HEAD -> main) HEAD@{0}: reset: moving to HEAD~
@@ -521,11 +449,8 @@ d3e15f9 HEAD@{9}: reset: moving to HEAD~
 ```
 
 ## 比较diff
-
 `git diff`用来比较不同文件版本之间的差异。
-
 **指令描述：**
-
 + `git diff`查看暂存区和工作区的差异
 + `git diff [file]`同上，指定文件
 + `git diff --cached`查看已暂存的改动，就是暂存区与新版本HEAD进行比较
@@ -536,10 +461,7 @@ d3e15f9 HEAD@{9}: reset: moving to HEAD~
 + `git diff [id] [id]`查看两次提交之间的差异`git diff [branch]`查看工作区和分支直接的差异
 
 画个图更清晰些：
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntueAb2loAADYFg2aR34028.png|2f764dbc-05d3-11ee-962d-dac502259ad0.png]]
-
-
 
 ```shell
 # 查看文件的修改
@@ -551,36 +473,25 @@ $ git diff 8f4244 1da22
 # 显示今天你写了多少行代码：工作区+暂存区
 $ git diff --shortstat "@{0 day ago}"
 ```
-
 ------
 
 # 远程仓库
-
 `Git`作为分布式的版本管理系统，每个终端都有自己的`Git`仓库。但团队协作还需一个中间仓库，作为中心，同步各个仓库。于是服务端（远程）仓库就来承担这个职责，服务端不仅有仓库，还配套相关管理功能。
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntuiAehZ_AADAMvWhZEU041.png|2f7e78ca-05d3-11ee-962d-dac502259ad0.png]]
 
-
-
 可以用公共的`Git`服务器，也可以自己搭建一套`Git`服务器。
-
 - 公共`Git`服务器，如`Github`、`Gitlab`、码云`Gitee`、腾讯`Coding`等。
 - 搭建私有`Git`服务器，如开源的`Gitlab`、`Gitea`、等。
 
 ## 远程用户登录
-
 Git服务器一般提供两种登录验证方式：
-
 - HTTS：基于HTTPS连接，使用用户名、密码身份验证。
   - 每次都要输入用户名、密码，当然可以记住。
   - 地址形式：https://github.com/kwonganding/KWebNote.git
 - SSL：采用SSL[通信](https://m.elecfans.com/v/tag/1301/)协议，基于公私钥进行身份验证，所以需要额外配置公私秘钥。
   - 不用每次输入用户名、密码，比较推荐的方法。
-  - 地址形式：git@github.com:kwonganding/KWebNote.git
-
+  - 地址形式：git@github.com:`kwonganding/KWebNote.git`
 ![[笔记/01 附件/git-基础概念/wKgZomTntuiABUAxAABOyFlOj5s630.jpg|2f9ed0a2-05d3-11ee-962d-dac502259ad0.jpg]]
-
-
 
 ```
 #查看当前远程仓库使用的那种协议连接：
@@ -593,12 +504,8 @@ git config --global http.sslVerify false
 ```
 
 ### 远程用户登录：HTTS
-
 基于HTTPS的地址连接远程仓库，Github的共有仓库克隆、拉取（pull）是不需要验证的。
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntuiAb9NJAABUHtxvrQU929.jpg|2fcc811e-05d3-11ee-962d-dac502259ad0.jpg]]
-
-
 
 ```
 $ git clone 'https://github.com/kwonganding/KWebNote.git'
@@ -612,7 +519,6 @@ Cloning into 'KWebNote'...
 ```
 
 推送（push）代码的时候就会提示输入用户名、密码了，否则无法提交。记住用户密码的方式有两种：
-
 - **URL地址配置**：在原本URL地址上加上用户名、密码，https://后加用户名:密码@
 
 ```
@@ -624,7 +530,6 @@ Cloning into 'KWebNote'...
 ```
 
 - **本地缓存**：会创建一个缓存文件.git-credentials，存储输入的用户名、密码。
-
 ```
 # 参数“--global”全局有效，也可以针对仓库设置“--local”
 # store 表示永久存储，也可以设置临时存储
@@ -635,40 +540,28 @@ https://kwonganding:[加密内容付费可见]@github.com
 ```
 
 ### 远程用户登录：SSH
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntuiAaV2UAABBUYPZZEg096.jpg|2fedaa10-05d3-11ee-962d-dac502259ad0.jpg]]
-
-
 
 SSH（Secure Shell，安全外壳）是一种[网络](https://m.elecfans.com/v/tag/1722/)安全协议，通过加密和[认证](https://bbs.elecfans.com/group_776)机制实现安全的访问和文件传输等业务，多用来进行远程登录、数据传输。SSH通过公钥、私钥非对称加密数据，所以SSH需要生成一个公私钥对，公钥放服务器上，私有自己留着进行认证。
 
 ![[笔记/01 附件/git-基础概念/wKgZomTntuiAXDZfAABiMeE63PE259.jpg|300727a6-05d3-11ee-962d-dac502259ad0.jpg]]
 
-
-
 **① 生成公私钥**：通过Git指令ssh-keygen -t rsa生成公私钥，一路回车即可完成。生成在“C:Users用户名.ssh”目录下，文件id_rsa.pub的内容就是公钥。
 
 ![[笔记/01 附件/git-基础概念/wKgZomTntuiAKFIkAACXQQdwyCc863.jpg|3023d02c-05d3-11ee-962d-dac502259ad0.jpg]]
-
-
 
 **② 配置公钥**：打开id_rsa.pub文件，复制内容。Github上，打开Setting➤SSH and GPG keys➤SSH keys➤ 按钮New SSH key，标题（Title）随意，秘钥内容粘贴进去即可。
 
 ![[笔记/01 附件/git-基础概念/wKgZomTntumAU6qRAADRVFMLF8U004.png|302ed2ce-05d3-11ee-962d-dac502259ad0.png]]
 
-
-
 SSH配置完后，可用ssh -T git@github.com来[检测](https://bbs.elecfans.com/group_776)是否连接成功。
-
 ```
 $ ssh -T git@github.com
 Hi kwonganding! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
 ## 远程仓库指令
-
 **指令描述**
-
 + `git clone [git地址]`：从远程仓库克隆到本地（当前目录）
 + `git remote -v`：查看所有远程仓库，不带参数`-v`只显示名称
 + `git remote show [remote]`：显示某个远程仓库的信息
@@ -686,34 +579,21 @@ Hi kwonganding! You've successfully authenticated, but GitHub does not provide s
 + `git pull --rebase`：使用`rebase`的模式进行合并
 
 ## 推送push/拉取pull
-
 `git push、git pull`是团队协作中最常用的指令，用于同步本地、服务端的更新，与他人协作。
-
 **推送**（`push`）：推送本地仓库到远程仓库。
-
 - 如果推送的更新与服务端存在冲突，则会被拒绝，`push`失败。一般是有其他人推送了代码，导致文件冲突，可以先`pull`代码，在本地进行合并，然后再`push`。
-
 **拉取**（`pull`）：从服务端（远程）仓库更新到本地仓库。
-
 - `git pull`：拉取服务端的最新提交到本地，并与本地合并，合并过程同分支的合并。
 - `git fetch`：拉取服务端的最新提交到本地，不会自动合并，也不会更新工作区。
 
 ![[笔记/01 附件/git-基础概念/wKgZomTntumAAUWbAADSxqwpL7o150.png|30563f30-05d3-11ee-962d-dac502259ad0.png]]
 
-
-
 ## fetch与pull有什么不同？
-
 两者都是从服务端获取更新，主要区别是`fetch`不会自动合并，不会影响当前工作区内容。
-
 > `git pull` = `git fetch + git merge`
-
 - 如下面图中，`git fetch`只获取了更新，并未影响`master、HEAD`的位置。
 - 要更新`master、HEAD`的位置需要手动执行`git merge`合并。
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntumAUSvWAAET2eHSFSk874.png|3072b7c8-05d3-11ee-962d-dac502259ad0.png]]
-
-
 
 ```
 # fetch只更新版本库
@@ -737,29 +617,21 @@ Fast-forward
 ------
 
 # Git利器-分支
-
 分支是从主线分离出去的“副本”，分支就像是平行宇宙，可独立发展，独立编辑、提交，也可以和其他分支合并。分支是Git的核心必杀利器之一，分支创建、切换、删除都非常快，他非常的轻量。所以，早建分支！多用分支！
 
 ![[笔记/01 附件/git-基础概念/wKgZomTntumADCnDAAAZBxg8iWs225.png|308ee740-05d3-11ee-962d-dac502259ad0.png]]
 
-
-
 ## 分支Branch
-
 比如有一个项目团队，准备10月份发布新版本，要新开发一堆黑科技功能，占领市场。你和小伙伴“小美”一起负责开发一个新功能A，开发周期2周，在这两周你们的代码不能影响其他人，不影响主分支。这个时候就可以为这个新功能创建一个分支，你们两在这个分支上干活，2周后代码开发完了、测试通过，就可以合并进要发版的开发分支了。安全、高效，不影响其他人工作，完美！
 
 ![[笔记/01 附件/git-基础概念/wKgZomTntumAYwWJAADGkj9UP3A118.jpg|309af094-05d3-11ee-962d-dac502259ad0.jpg]]
 
-
-
 在实际项目中，一般会建几个主线分支。
-
 - **master**：作为主分支，存放稳定的代码，就是开发后测试通过的代码，不允许随便修改和合并。
 - **开发分支**：用于团队日常开发用，比如团队计划10月份开发10个功能并发版，则在此分支上进行，不影响主分支的稳定。
 - **功能A分支**：开发人员根据自己的需要，可以创建一些临时分支用于特定功能的开发，开发完毕后再合并到开发分支，并删除该分支。
 
 **分支**就是指向某一个提交记录的“指针”引用，因此创建分支是非常快的，不管仓库多大。当我们运行`git branch dev`创建了一个名字为`dev`的分支，`Git`实际上是在`.git/refs/heads`下创建一个`dev`的引用文件（没有扩展名）。
-
 ```shell
 $ git branch dev
 $ cat .git/refs/heads/dev
@@ -767,9 +639,7 @@ ca88989e7c286fb4ba56785c2cd8727ea1a07b97
 ```
 
 ## 分支指令
-
 **指令描述：**
-
 + `git branch`：列出所有本地分支，加参数`-v`显示详细列表，下同
 + `git branch -r`：列出所有远程分支
 + `git branch -a`：列出所有本地分支和远程分支，用不同颜色区分
@@ -806,12 +676,9 @@ $ git branch
 ```
 
 ## 分支的切换checkout
-
 代码仓库可以有多个分支，`master`为默认的主分支，但只有一个分支在工作状态。所以要操作不同分支，需要切换到该分支，`HEAD`就是指向当前正在活动的分支。
 
 ![[笔记/01 附件/git-基础概念/wKgZomTntumAMjbeAAB8SfOo2bc513.jpg|30ba28ce-05d3-11ee-962d-dac502259ad0.jpg]]
-
-
 
 ```shell
 # 切换到dev分支，HEAD指向了dev
@@ -821,29 +688,20 @@ Switched to branch 'dev'
 $ cat .git/HEAD
 ref: refs/heads/dev
 ```
-
 使用`git checkout dev`切换分支时，干了两件事：
-
 - ①`HEAD`指向`dev`：修改`HEAD`的“`指针`”引用，指向`dev`分支。
 - ②还原工作空间：把`dev`分支内容还原到工作空间。
 
 此时的活动分支就是`dev`了，后续的提交就会更新到`dev`分支了。
-
 **切换时还没提交的代码怎么办？**
-
 - 如果修改（包括未暂存、已暂存）和待切换的分支没有冲突，则切换成果，且未提交修改会一起带过去，所以要注意！
 - 如果有冲突，则会报错，提示先提交或隐藏，关于隐藏可查看后续章节内容“`stash`”。
 
 ## 合并merge&冲突
-
 把两个分支的修改内容合并到一起，常用的合并指令`git merge [branch]`，**将分支[branch]合并到<font color=gree>当前分支</font>**。根据要合并的内容的不同，具体合并过程就会有多种情况。
-
 ![[笔记/01 附件/git-基础概念/wKgZomTntumAYDtQAABnFdig9Cs735.png|30f17630-05d3-11ee-962d-dac502259ad0.png]]
 
-
-
 ### 快速合并（Fast forward）
-
 如下图，master分支么有任何提交，`“git merge dev”`合并分支`dev`到`master`，此时合并速度就非常快，直接移动`master`的“指针”引用到`dev`即可。**这就是快速合并（Fast forward），不会产生新的提交**。
 
 ![[笔记/01 附件/git-基础概念/wKgZomTntuqAbScgAADxOo2dDes238.png|3111cc6e-05d3-11ee-962d-dac502259ad0.png]]
