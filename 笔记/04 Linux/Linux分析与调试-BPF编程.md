@@ -28,7 +28,7 @@ sudo apt install llvm bpf-dev
 
 我们可以参靠内核源码下的`kernel/sample/bpf/*`
 
-![image-20240726114140248](笔记/01 附件/Linux分析与调试-BPF编程/image-20240726114140248.png)
+![[笔记/01 附件/Linux分析与调试-BPF编程/image-20240726114140248.png|image-20240726114140248]]
 
 可以看到，里面的代码大部分都是成对出现的，比如：
 
@@ -173,7 +173,7 @@ i2cset 1  0x11 0x99 44 b
 
 发现没有任何打印信息，猜想可能输出可能不会打印到标准输出，我们找到辅助函数：`trace_helpers.h`，`trace_helpers.c`。位置在：`SDK_SOURCE/kernel/tools/testing/selftests/bpf`下：
 
-![image-20240726134805165](笔记/01 附件/Linux分析与调试-BPF编程/image-20240726134805165.png)
+![[笔记/01 附件/Linux分析与调试-BPF编程/image-20240726134805165.png|image-20240726134805165]]
 
 我们复制它俩到工程中，然后修改`Makefile`：
 
@@ -520,7 +520,7 @@ int main() {
  cat /sys/kernel/debug/tracing/trace_pipe |grep "hid_input_report"
 ```
 
-![image-20240726172411805](笔记/01 附件/Linux分析与调试-BPF编程/image-20240726172411805.png)
+![[笔记/01 附件/Linux分析与调试-BPF编程/image-20240726172411805.png|image-20240726172411805]]
 # 交叉编译
 ## 问题1
 https://lore.kernel.org/bpf/20211021123913.48833-1-pulehui@huawei.com/t/
