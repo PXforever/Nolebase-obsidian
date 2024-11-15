@@ -27,44 +27,34 @@ sudo apt install llvm bpf-dev
 > + 用户层代码
 
 我们可以参靠内核源码下的`kernel/sample/bpf/*`
-
 ![[笔记/01 附件/Linux分析与调试-BPF编程/image-20240726114140248.png|image-20240726114140248]]
 
 可以看到，里面的代码大部分都是成对出现的，比如：
-
 ```shell
 test_current_task_under_cgroup_kern.c
 test_current_task_under_cgroup_user.c
 ```
-
 我们也来编写一个这样的程序来测试。
-
 接下来我们会在：
-
 + `RK3588`
 + `kernel-5.10.160`
 
 # 编程示例
-
 ## `i2c_write`
-
 我们先看看内核支持的事件，有这几种方式：
 
 1. 通过`bpftool`
-
 ```shell
 sudo bpftrace -l
 ```
 
 2. 通过`debugfs`
-
 ```shell
 # cd /sys/kernel/debug/tarcing
 这里面相应的目录就是对应的事件
 ```
 
 接着编写如下代码：
-
 ```c
 //trace_i2c_write.c
 #include <linux/bpf.h>
@@ -136,7 +126,6 @@ int main() {
 ```
 
 `Makefile如下：`
-
 ```makefile
 KER_BPF = trace_i2c_write.c
 APP_BPF = loader.c
@@ -159,24 +148,20 @@ clean:
 ```
 
 编译后，执行：
-
 ```shell
 sudo ./loader
 # 其中trace_i2c_write.o不需要操作，因为它是被loader加载
 ```
 
 我们开启另外一个`ssh`页面，使用命令来写`i2c`：
-
 ```shell
 i2cset 1  0x11 0x99 44 b
 ```
 
 发现没有任何打印信息，猜想可能输出可能不会打印到标准输出，我们找到辅助函数：`trace_helpers.h`，`trace_helpers.c`。位置在：`SDK_SOURCE/kernel/tools/testing/selftests/bpf`下：
-
 ![[笔记/01 附件/Linux分析与调试-BPF编程/image-20240726134805165.png|image-20240726134805165]]
 
 我们复制它俩到工程中，然后修改`Makefile`：
-
 ```makefile
 APP_TARGET = loader
 
@@ -204,7 +189,6 @@ clean:
 ```
 
 代码修改如下：
-
 ```c
 //trace_i2c_write.c
 #include <linux/bpf.h>
@@ -279,7 +263,6 @@ int main() {
 执行后发现打印了很多东西，也很快，我们不需要其他的数据，可以在`read_trace_pipe`中加入字符串比较进行过滤。
 
 我们可以通过：
-
 ```shell
 sudo bpftool prog list 
 # 或者
@@ -399,17 +382,13 @@ int main() {
     return 0;
 }
 ```
-
 因为在`i2c`实验中会打印大量无关的内容，我们通过查看节点来过滤：
-
 ```shell
 sudo cat /sys/kernel/debug/tracing/trace_pipe |grep "bpf_demo"
 ```
 
 ## 输入设备事件捕获(鼠标、键盘)
-
 代码如下：
-
 ```c
 //trace_usb_hid_input.c
 #include <linux/bpf.h>
@@ -515,11 +494,9 @@ int main() {
 ```
 
 接着编译，启动，然后读取`trace`:
-
 ```shell
  cat /sys/kernel/debug/tracing/trace_pipe |grep "hid_input_report"
 ```
-
 ![[笔记/01 附件/Linux分析与调试-BPF编程/image-20240726172411805.png|image-20240726172411805]]
 # 交叉编译
 ## 问题1
