@@ -5,24 +5,27 @@ share: "true"
 # 前言
 
 > 我们在`BPF原理`一文中理解了BPF的使用，现在开始实践。
+> 这里使用的是`RK3588，kernel-6.6`
 
 # 配置
-
 编写`bpf`程序前，我们需要开启内核以下支持：
-
 ```shell
+CONFIG_BPF=y             # 启用 BPF 支持
+CONFIG_BPF_SYSCALL=y     # 允许通过 syscall 加载 BPF 程序
+CONFIG_HAVE_EBPF_JIT=y   # 启用 eBPF JIT 编译器（提高性能）
+CONFIG_BPF_JIT=y         # 启用 eBPF 程序的 JIT 编译支持
 ```
 
 接着在机器上安装：
-
 ```shell
-sudo apt install llvm bpf-dev
+sudo apt install llvm libbpf-dev
+
+# 安装工具bpftrace bpftool（在linux-tools-$(uname -r)中）
+sudo apt install bpftrace linux-tools-$(uname -r)
 ```
 
 # 编程
-
 > `bpf`程序分两部分：
->
 > + 载入内核的代码
 > + 用户层代码
 
@@ -147,18 +150,26 @@ clean:
 	rm -rf ${KER_OBJ} ${APP_OBJ}
 ```
 
-编译后，执行：
+在`RK3588`上编译后，执行：
 ```shell
+# 编译
+make
+
+# 执行加载到内核
 sudo ./loader
 # 其中trace_i2c_write.o不需要操作，因为它是被loader加载
 ```
 
 我们开启另外一个`ssh`页面，使用命令来写`i2c`：
 ```shell
+# 安装i2c工具
+apt install i2c-tools
+
+# 测试
 i2cset 1  0x11 0x99 44 b
 ```
 
-发现没有任何打印信息，猜想可能输出可能不会打印到标准输出，我们找到辅助函数：`trace_helpers.h`，`trace_helpers.c`。位置在：`SDK_SOURCE/kernel/tools/testing/selftests/bpf`下：
+**发现没有任何打印信息，猜想可能输出可能不会打印到标准输出**，我们找到辅助函数：`trace_helpers.h`，`trace_helpers.c`。位置在：`SDK_SOURCE/kernel/tools/testing/selftests/bpf`下：
 ![[笔记/01 附件/Linux分析与调试-BPF编程/image-20240726134805165.png|image-20240726134805165]]
 
 我们复制它俩到工程中，然后修改`Makefile`：
@@ -177,7 +188,7 @@ ${KER_OBJ}: ${KER_BPF}
 	clang -O2 -target bpf -c $< -o $@ -I/usr/include/aarch64-linux-gnu
 
 ${APP_TARGET}: ${APP_TARGET}.c ${APP_OBJ}
-	gcc -o $@ $? -lbpf
+	gcc -o $@ $? -lbpf -lelf
 
 ${APP_OBJ}: %.o: %.c
 	gcc -c $? -o $@  -lbpf
@@ -259,9 +270,8 @@ int main() {
     return 0;
 }
 ```
-
 执行后发现打印了很多东西，也很快，我们不需要其他的数据，可以在`read_trace_pipe`中加入字符串比较进行过滤。
-
+![[笔记/01 附件/file-20241116170110317.png|笔记/01 附件/file-20241116170110317.png]]
 我们可以通过：
 ```shell
 sudo bpftool prog list 
@@ -285,7 +295,7 @@ ${KER_OBJ}: ${KER_BPF}
 	clang -O2 -target bpf -c $< -o $@ -I/usr/include/aarch64-linux-gnu
 
 ${APP_TARGET}: ${APP_TARGET}.c ${APP_OBJ}
-	gcc -o $@ $? -lbpf
+	gcc -o $@ $? -lbpf -lelf
 
 ${APP_OBJ}: %.o: %.c
 	gcc -c $? -o $@  -lbpf
