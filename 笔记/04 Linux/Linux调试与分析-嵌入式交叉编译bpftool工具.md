@@ -16,7 +16,7 @@ make ARCH=arm64 CROSS_COMPILE=${CROSS_COMPILE} -j25 tools/bpf/bpftool
 ```
 
 执行后，我们发现错误：
-![[笔记/01 附件/file-20241115151159048.png|Linux调试与分析-嵌入式交叉编译bpftool工具/file-20241115151159048.png]]
+![[笔记/01 附件/file-20241115151159048.png|笔记/01 附件/file-20241115151159048.png]]
 查找了一下，发现`编译工具链目录`没有该头文件，表示缺少库，我们使用源码进行编译`elfutils`：
 ```shell
 # 下载源码
@@ -47,7 +47,7 @@ CROSS_COMPILE="/home/<user name>/rk3588/prebuilts/gcc/linux-x86/aarch64/gcc-arm-
 # 编译
 make ARCH=arm64 CROSS_COMPILE=${CROSS_COMPILE} -j20 srcdeb-pkg
 ```
-![[笔记/01 附件/file-20241116155021111.png|Linux调试与分析-嵌入式交叉编译bpftool工具/file-20241116155021111.png]]
+![[笔记/01 附件/file-20241116155021111.png|笔记/01 附件/file-20241116155021111.png]]
 接着，我们上传源码包到机器上，然后解压：
 ```shell
 sudo tar -xvf linux.tar.gz -C /usr/src/
@@ -80,4 +80,4 @@ make install
 ```shell
 bpftool prog list
 ```
-![[笔记/01 附件/file-20241116163837028.png|Linux调试与分析-嵌入式交叉编译bpftool工具/file-20241116163837028.png]]
+![[笔记/01 附件/file-20241116163837028.png|笔记/01 附件/file-20241116163837028.png]]
